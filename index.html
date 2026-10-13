@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pumpkin Excuse Oracle</title>
+<style>:root{--c:#d35400}body{font-family:system-ui,sans-serif;margin:0;background:#f4f6fb;color:#1a1a2e}header{padding:1.5rem;text-align:center;color:#fff;background:var(--c,#334)}main{max-width:760px;margin:auto;padding:1rem}.card{background:#fff;border-radius:12px;padding:1rem 1.25rem;margin:1rem 0;box-shadow:0 2px 6px #0001}label{display:block;margin:.5rem 0}input,select,textarea{display:block;width:100%;padding:.5rem;font-size:1rem;box-sizing:border-box}button{background:var(--c,#334);color:#fff;border:0;padding:.6rem 1rem;border-radius:8px;font-size:1rem;cursor:pointer;margin:.3rem .3rem 0 0}button:focus,input:focus{outline:3px solid #f90}table{width:100%;border-collapse:collapse}td,th{padding:.4rem;border-bottom:1px solid #ddd;text-align:left}.big{font-size:2rem;font-weight:700} body{background:#1b0f24;color:#ffe9d6;text-align:center}.card{background:#2b1838;color:#ffe9d6}#pk{font-size:9rem;cursor:pointer;transition:transform .3s;user-select:none}#pk.shake{animation:s .5s}@keyframes s{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}#ex{font-size:1.4rem;min-height:3em}</style></head><body>
+<header><h1>🎃 The Pumpkin Excuse Oracle</h1><p>Missed a deadline? Ask the pumpkin. It has never been wrong (it has always been wrong).</p></header><main>
+<div class="card"><div id="pk" role="button" tabindex="0" aria-label="Poke the pumpkin">🎃</div>
+<label>What did you not do?<input id="task" placeholder="my lab report" maxlength="40"></label>
+<button id="go">Consult the Oracle</button><p id="ex" aria-live="polite"></p><p>Believability: <b id="bel">—</b></p><button id="copy">📋 Copy excuse</button></div>
+<div class="card">Excuses generated: <span class="big" id="n">0</span></div></main>
+<script>
+const who=['a ghost','my roommate\'s cat','a sentient pumpkin','the Wi-Fi spirits','a vampire TA','three raccoons in a trench coat','Mercury in retrograde','a haunted USB stick'];
+const did=['ate','hexed','carved into a jack-o\'-lantern','turned invisible','sent to another dimension','used as a candy wrapper for','possessed','buried in the backyard'];
+const why=['because it was a full moon.','to finish their own homework.','out of pure spite.','as part of a seance.','and then demanded candy.','while humming the Monster Mash.'];
+const r=a=>a[Math.floor(Math.random()*a.length)];let n=+localStorage.getItem('pn')||0;const $=i=>document.getElementById(i);$('n').textContent=n;
+function go(){const t=$('task').value.trim()||'my homework';const pk=$('pk');pk.classList.remove('shake');void pk.offsetWidth;pk.classList.add('shake');
+pk.textContent=r(['🎃','👻','🦇','💀','🎃']);$('ex').textContent='Sorry, '+r(who)+' '+r(did)+' '+t+' '+r(why);
+$('bel').textContent=Math.floor(Math.random()*12)+'% '+r(['(bold)','(the dean will laugh)','(do not use on a prof)','(trust me)']);
+localStorage.setItem('pn',++n);$('n').textContent=n;try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.type='sawtooth';o.frequency.setValueAtTime(220,a.currentTime);o.frequency.exponentialRampToValueAtTime(80,a.currentTime+.5);g.gain.setValueAtTime(.08,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.6);o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+.6)}catch(e){}}
+$('go').onclick=go;$('pk').onclick=go;$('pk').onkeydown=e=>{if(e.key==='Enter'||e.key===' ')go()};
+$('copy').onclick=()=>navigator.clipboard&&navigator.clipboard.writeText($('ex').textContent);
+</script></body></html>
